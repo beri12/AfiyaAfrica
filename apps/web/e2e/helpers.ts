@@ -33,9 +33,17 @@ export async function activate(page: Page, url: string) {
 
 /** Direct API login for assertions that bypass the UI (authorization tests). */
 export async function apiLogin(request: APIRequestContext, email: string, password = PASSWORD): Promise<string> {
-  const r = await request.post('/api/v1/auth/login', { data: { email, password } });
-  expect(r.status()).toBe(200);
-  return (await r.json()).data.accessToken as string;
+  // Edge rate limiting (10 logins/min/IP) is expected in production-like stacks: back off and retry.
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const r = await request.post('/api/v1/auth/login', { data: { email, password } });
+    if (r.status() === 429) {
+      await new Promise((res) => setTimeout(res, 7_000));
+      continue;
+    }
+    expect(r.status()).toBe(200);
+    return (await r.json()).data.accessToken as string;
+  }
+  throw new Error('Login rate-limited for too long');
 }
 
 /** Clinic-local (UTC+3) date string N days ahead. */

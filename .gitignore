@@ -13,3 +13,5 @@ playwright-report/
 test-results/
 backups/
 .turbo/
+infrastructure/nginx/certs/
+docker-compose.override.yml
