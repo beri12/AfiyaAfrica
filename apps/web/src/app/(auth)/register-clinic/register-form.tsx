@@ -88,7 +88,7 @@ export function RegisterClinicForm() {
               <Field label="First name" required error={errors.admin?.firstName?.message}><Input autoComplete="given-name" {...register('admin.firstName')} /></Field>
               <Field label="Last name" required error={errors.admin?.lastName?.message}><Input autoComplete="family-name" {...register('admin.lastName')} /></Field>
               <Field label="Your email" required error={errors.admin?.email?.message}><Input type="email" autoComplete="email" {...register('admin.email')} /></Field>
-              <Field label="Your phone" error={errors.admin?.phone?.message}><Input type="tel" autoComplete="tel" {...register('admin.phone')} /></Field>
+              <Field label="Your phone" error={errors.admin?.phone?.message}><Input type="tel" autoComplete="tel" {...register('admin.phone', { setValueAs: (v: string) => v || undefined })} /></Field>
             </FormGrid>
             <Field label="Password" required hint="At least 10 characters with letters and numbers" error={errors.admin?.password?.message}><Input type="password" autoComplete="new-password" {...register('admin.password')} /></Field>
           </>
