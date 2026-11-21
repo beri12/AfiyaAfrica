@@ -9,7 +9,8 @@ import { CryptoModule } from './common/crypto/encryption.service';
 import { AccessGuard } from './common/guards/access.guard';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
-import { RedisModule } from './modules/redis/redis.module';
+import { BullModule } from '@nestjs/bullmq';
+import { RedisModule, redisConnectionOptions } from './modules/redis/redis.module';
 import { HealthModule } from './modules/health/health.module';
 import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -45,7 +46,16 @@ import { FEATURE_MODULES } from './modules';
     ThrottlerModule.forRootAsync({
       inject: [AppConfig],
       useFactory: (config: AppConfig) => ({
-        throttlers: [{ name: 'default', ttl: 60_000, limit: config.isTest ? 10_000 : 300 }],
+        throttlers: [{ name: 'default', ttl: 60_000, limit: 300 }],
+        // Tests opt in explicitly (THROTTLE_IN_TESTS=true) so suites can create many sessions quickly.
+        skipIf: () => config.isTest && process.env.THROTTLE_IN_TESTS !== 'true',
+      }),
+    }),
+    BullModule.forRootAsync({
+      inject: [AppConfig],
+      useFactory: (config: AppConfig) => ({
+        connection: redisConnectionOptions(config.get('REDIS_URL')),
+        prefix: config.isTest ? 'afyalink-test' : 'afyalink',
       }),
     }),
     PrismaModule,
