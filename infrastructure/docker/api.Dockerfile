@@ -2,7 +2,7 @@
 # Optional extra CA for builds behind corporate/egress proxies:
 #   docker build --secret id=extra_ca,src=/path/to/ca.crt ...
 # ---------- build (full image: compilers + OpenSSL, no apt needed) ----------
-FROM node:22-bookworm AS build
+FROM node:26-bookworm AS build
 RUN --mount=type=secret,id=extra_ca,required=false sh -c 'if [ -f /run/secrets/extra_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/extra_ca npm_config_cafile=/run/secrets/extra_ca; fi; corepack enable && corepack prepare pnpm@10.28.0 --activate'
 WORKDIR /repo
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
