@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+
+/*
+ * AfyaLink AI design tokens.
+ * Primary: deep medical blue · Secondary: teal · Neutral: soft slate · Semantic: success / warning / danger.
+ */
+@theme {
+  --font-sans: 'Inter Variable', 'Noto Sans Ethiopic', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans Variable', 'Noto Sans Ethiopic', ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #eef5fc;
+  --color-brand-100: #d9e8f7;
+  --color-brand-200: #b5d1ef;
+  --color-brand-300: #85b2e3;
+  --color-brand-400: #528cd2;
+  --color-brand-500: #2f6dbf;
+  --color-brand-600: #1f56a3;
+  --color-brand-700: #174484;
+  --color-brand-800: #12366a;
+  --color-brand-900: #0d2a55;
+  --color-brand-950: #081c3a;
+
+  --color-teal-50: #edfbf9;
+  --color-teal-100: #d2f4ef;
+  --color-teal-200: #a6e8e0;
+  --color-teal-300: #6fd5cb;
+  --color-teal-400: #3bbab0;
+  --color-teal-500: #1e9e95;
+  --color-teal-600: #157f79;
+  --color-teal-700: #146562;
+  --color-teal-800: #13514f;
+  --color-teal-900: #124342;
+
+  --color-surface: #ffffff;
+  --color-canvas: #f6f8fb;
+  --color-ink: #0f1b2d;
+  --color-muted: #5b6b80;
+  --color-line: #e3e8ef;
+
+  --color-success: #15803d;
+  --color-success-soft: #e8f6ee;
+  --color-warning: #b45309;
+  --color-warning-soft: #fdf3e2;
+  --color-danger: #c62828;
+  --color-danger-soft: #fdecec;
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgb(15 27 45 / 0.04), 0 4px 16px -4px rgb(15 27 45 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(15 27 45 / 0.04), 0 18px 40px -12px rgb(13 42 85 / 0.22);
+
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+  ::selection {
+    @apply bg-teal-200 text-brand-950;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(13 42 85 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(13 42 85 / 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  /* Elements animated by GSAP start hidden only when JS + motion are available (set on <html>). */
+  .js-motion [data-reveal] { visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-reveal] { visibility: visible !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

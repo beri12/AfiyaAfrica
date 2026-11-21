@@ -33,6 +33,7 @@ import { FEATURE_MODULES } from './modules';
           },
           serializers: {
             req: (req: { id: string; method: string; url: string }) => ({ id: req.id, method: req.method, url: req.url }),
+            res: (res: { statusCode: number }) => ({ statusCode: res.statusCode }),
           },
           transport: config.isProduction || config.isTest ? undefined : { target: 'pino-pretty', options: { singleLine: true } },
         },

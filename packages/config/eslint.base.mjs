@@ -6,7 +6,7 @@ export const base = tseslint.config(js.configs.recommended, ...tseslint.configs.
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'error',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
-    eqeqeq: ['error', 'always'],
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
   },
 });
 export default base;
