@@ -1,0 +1,2 @@
+import base from '@afyalink/config/eslint.base.mjs';
+export default [...base, { ignores: ['dist', 'prisma/seed.ts'] }];

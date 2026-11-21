@@ -1,0 +1,7 @@
+{
+  "name": "@afyalink/config",
+  "version": "0.1.0",
+  "private": true,
+  "files": ["tsconfig.base.json", "eslint.base.mjs"],
+  "scripts": { "typecheck": "true", "lint": "true", "test": "true", "build": "true" }
+}
