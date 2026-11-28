@@ -50,7 +50,7 @@
     "@afyalink/config": "workspace:*",
     "@eslint/js": "9.39.5",
     "@nestjs/cli": "11.0.24",
-    "@nestjs/testing": "11.2.11",
+    "@nestjs/testing": "12.6.2",
     "@types/cookie-parser": "1.4.10",
     "@types/express": "5.0.6",
     "@types/jest": "29.5.14",
